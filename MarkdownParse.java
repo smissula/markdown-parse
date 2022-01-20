@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.math.*;
 
 public class MarkdownParse {
     public static ArrayList<String> getLinks(String markdown) {
@@ -16,7 +17,18 @@ public class MarkdownParse {
             int nextCloseBracket = markdown.indexOf("]", nextOpenBracket);
             int openParen = markdown.indexOf("(", nextCloseBracket);
             int closeParen = markdown.indexOf(")", openParen);
-            toReturn.add(markdown.substring(openParen + 1, closeParen));
+            
+            // closeParen = Math.min(closeParen, markdown.indexOf("\n", openParen));
+            if (closeParen == -1) {
+                closeParen = markdown.indexOf("\n", openParen);
+            }
+            if (closeParen == -1) {
+                toReturn.add(markdown.substring(openParen + 1));
+                closeParen = markdown.length();
+            }
+            else {
+                toReturn.add(markdown.substring(openParen + 1, closeParen));
+            }
             currentIndex = closeParen + 1;
             System.out.print(currentIndex + " ");
         }
