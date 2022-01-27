@@ -23,6 +23,13 @@ public class MarkdownParse {
             // index of end of line
             int endOfLine = markdown.indexOf("\n", openParen);
 
+            // test breaker for images
+            if (nextOpenBracket > 0 &&
+                markdown.substring(nextOpenBracket-1, nextOpenBracket).equals("!")) {
+                currentIndex = nextOpenBracket + 1;
+                continue;
+            }
+
             if (closeParen == -1) {
                 if (endOfLine == -1) {
                     toReturn.add(markdown.substring(openParen+1, endOfFile));
