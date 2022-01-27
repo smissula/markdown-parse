@@ -16,20 +16,40 @@ public class MarkdownParse {
             int nextOpenBracket = markdown.indexOf("[", currentIndex);
             int nextCloseBracket = markdown.indexOf("]", nextOpenBracket);
             int openParen = markdown.indexOf("(", nextCloseBracket);
+            // first closing parenthesis 
             int closeParen = markdown.indexOf(")", openParen);
-            
-            // closeParen = Math.min(closeParen, markdown.indexOf("\n", openParen));
+            // index of end of file
+            int endOfFile = markdown.length();
+            // index of end of line
+            int endOfLine = markdown.indexOf("\n", openParen);
+
             if (closeParen == -1) {
-                closeParen = markdown.indexOf("\n", openParen);
+                if (endOfLine == -1) {
+                    toReturn.add(markdown.substring(openParen+1, endOfFile));
+                    currentIndex = endOfFile;
+                    // System.out.println("1: New current idx: " + currentIndex);
+                }
+                else {
+                    toReturn.add(markdown.substring(openParen+1, 
+                                Math.min(endOfLine, endOfFile)));
+                    currentIndex = Math.min(endOfLine, endOfFile) + 1;
+                    // System.out.println("2: New current idx: " + currentIndex);
+                }
             }
-            if (closeParen == -1) {
-                toReturn.add(markdown.substring(openParen + 1));
-                closeParen = markdown.length();
+            else if (endOfLine == -1) {
+                toReturn.add(markdown.substring(openParen+1, 
+                            Math.min(closeParen, endOfFile)));
+                currentIndex = Math.min(closeParen, endOfFile) + 1;
+                // System.out.println("3: New current idx: " + currentIndex);
             }
             else {
-                toReturn.add(markdown.substring(openParen + 1, closeParen));
+                toReturn.add(markdown.substring(openParen+1, 
+                        Math.min(endOfLine, Math.min(endOfFile, closeParen))));
+                currentIndex = Math.min(endOfLine,
+                    Math.min(endOfFile, closeParen)) + 1;
+                // System.out.println("4: New current idx: " + currentIndex);
             }
-            currentIndex = closeParen + 1;
+            
             System.out.print(currentIndex + " ");
         }
         System.out.println();
