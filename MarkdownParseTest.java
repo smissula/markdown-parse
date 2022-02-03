@@ -18,4 +18,11 @@ public class MarkdownParseTest {
         List<String> expect = List.of("https://something.com", "some-page.html");
         assertEquals(MarkdownParse.getLinks(contents), expect);
     }
+
+    @Test
+    public void testImageLink() throws IOException {
+        String contents = Files.readString(Path.of("/home/yoda/Code/CSE 15L/markdown-parse/image-test.md"));
+        List<String> expect = List.of("ThisIsANormalLink", "AlsoNormal!!!");
+        assertEquals(MarkdownParse.getLinks(contents), expect);
+    }
 }
