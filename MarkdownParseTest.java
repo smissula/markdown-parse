@@ -13,7 +13,7 @@ public class MarkdownParseTest {
 
     @Test
     public void testGetLinks() throws IOException {
-	    String contents = Files.readString(Path.of("smissula/markdown-parse/blob/main/test-file.md"));
+	    String contents = Files.readString(Path.of("https://github.com/smissula/markdown-parse/blob/main/test-file.md"));
         // ArrayList<String> links = MarkdownParse.getLinks(contents);
         List<String> expect = List.of("https://something.com", "some-page.html");
         assertEquals(MarkdownParse.getLinks(contents), expect);
@@ -21,7 +21,7 @@ public class MarkdownParseTest {
 
     @Test
     public void testImageLink() throws IOException {
-        String contents = Files.readString(Path.of("smissula/markdown-parse/blob/main/image-file.md"));
+        String contents = Files.readString(Path.of("https://github.com/smissula/markdown-parse/blob/main/image-file.md"));
         List<String> expect = List.of("ThisIsANormalLink", "AlsoNormal!!!");
         assertEquals(MarkdownParse.getLinks(contents), expect);
     }
