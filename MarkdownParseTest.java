@@ -21,7 +21,7 @@ public class MarkdownParseTest {
 
     @Test
     public void testImageLink() throws IOException {
-        String contents = Files.readString(Path.of("./image-file.md"));
+        String contents = Files.readString(Path.of("./image-test.md"));
         List<String> expect = List.of("ThisIsANormalLink", "AlsoNormal!!!");
         assertEquals(MarkdownParse.getLinks(contents), expect);
     }
