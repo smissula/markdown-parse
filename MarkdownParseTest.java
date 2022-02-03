@@ -38,4 +38,5 @@ public class MarkdownParseTest {
         List<String> expect = List.of("ThisIsANormalLink", "AlsoNormal!!!");
         assertEquals(MarkdownParse.getLinks(contents), expect);
     }
+
 }
