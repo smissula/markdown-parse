@@ -1,5 +1,6 @@
 import static org.junit.Assert.*;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.util.List;
 import java.io.*;
@@ -17,7 +18,7 @@ public class MarkdownParseTest {
         try {
 	        contents = Files.readString(Path.of("/home/yoda/Code/CSE 15L/markdown-parse/test-file.md"));
         }
-        catch (FileNotFoundException e) {
+        catch (NoSuchFileException e) {
             contents = Files.readString(Path.of("./test-file.md"));
         }
         // ArrayList<String> links = MarkdownParse.getLinks(contents);
@@ -31,7 +32,7 @@ public class MarkdownParseTest {
         try {
 	        contents = Files.readString(Path.of("/home/yoda/Code/CSE 15L/markdown-parse/image-test.md"));
         }
-        catch (FileNotFoundException e) {
+        catch (NoSuchFileException e) {
             contents = Files.readString(Path.of("./image-test.md"));
         }
         List<String> expect = List.of("ThisIsANormalLink", "AlsoNormal!!!");
