@@ -13,7 +13,13 @@ public class MarkdownParseTest {
 
     @Test
     public void testGetLinks() throws IOException {
-	    String contents = Files.readString(Path.of("./test-file.md"));
+        String contents;
+        try {
+	        contents = Files.readString(Path.of("/home/yoda/Code/CSE 15L/markdown-parse/test-file.md"));
+        }
+        catch (FileNotFoundException e) {
+            contents = Files.readString(Path.of("./test-file.md"));
+        }
         // ArrayList<String> links = MarkdownParse.getLinks(contents);
         List<String> expect = List.of("https://something.com", "some-page.html");
         assertEquals(MarkdownParse.getLinks(contents), expect);
@@ -21,7 +27,13 @@ public class MarkdownParseTest {
 
     @Test
     public void testImageLink() throws IOException {
-        String contents = Files.readString(Path.of("./image-test.md"));
+        String contents;
+        try {
+	        contents = Files.readString(Path.of("/home/yoda/Code/CSE 15L/markdown-parse/image-test.md"));
+        }
+        catch (FileNotFoundException e) {
+            contents = Files.readString(Path.of("./image-test.md"));
+        }
         List<String> expect = List.of("ThisIsANormalLink", "AlsoNormal!!!");
         assertEquals(MarkdownParse.getLinks(contents), expect);
     }
