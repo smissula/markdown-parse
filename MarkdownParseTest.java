@@ -2,6 +2,7 @@ import static org.junit.Assert.*;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import java.io.*;
 import org.junit.*;
@@ -37,6 +38,11 @@ public class MarkdownParseTest {
         }
         List<String> expect = List.of("ThisIsANormalLink", "AlsoNormal!!!");
         assertEquals(MarkdownParse.getLinks(contents), expect);
+    }
+
+    @Test
+    public void randomTest() {
+        assertEquals(List.of("space-in-url.com"), new ArrayList<String>());
     }
 
 }
