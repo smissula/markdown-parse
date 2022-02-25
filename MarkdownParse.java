@@ -88,9 +88,22 @@ public class MarkdownParse {
             int nextOpenBracket = markdown.indexOf("[", currentIndex);
             int nextCloseBracket = markdown.indexOf("]", nextOpenBracket);
             int openParen = markdown.indexOf("(", nextCloseBracket);
+
+            if (nextOpenBracket == -1 || nextCloseBracket == -1 ||
+                openParen == -1) {
+                break;
+            }
             
             // first closing parenthesis 
             int closeParen = markdown.indexOf(")", openParen);
+            int endOfLine = markdown.indexOf("\n", openParen);
+
+            // only accepts link in same line
+            if (endOfLine!=-1 && closeParen!=-1 && endOfLine <= closeParen) {
+                currentIndex = endOfLine + 1;
+                continue;
+            }
+            
             if (closeParen != -1 && nextCloseBracket + 1 != openParen) {
                 currentIndex = closeParen + 1;
                 continue;
