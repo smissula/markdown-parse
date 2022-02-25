@@ -40,9 +40,40 @@ public class MarkdownParseTest {
         assertEquals(MarkdownParse.getLinks(contents), expect);
     }
 
-    @Test
+    @Test(expected = AssertionError.class)
+    public void snippet1Test() throws IOException {
+        String contents = "`[a link`](url.com)\n\n[another link](`google.com)`"
+            + "\n\n[`cod[e`](google.com)\n\n[`code]`](ucsd.edu)";
+        List<String> expect = List.of("`google.com", "google.com", "ucsd.edu");
+        assertEquals(expect, MarkdownParse.getLinks(contents));
+    }
+
+    @Test(expected = AssertionError.class)
+    public void snippet2Test() throws IOException {
+        String contents = "[a [nested link](a.com)](b.com)\n\n[a nested "
+            + "parenthesized url](a.com(()))\n\n[some escaped \\[ brackets "
+            + "\\]](example.com)";
+        List<String> expect = List.of("a.com", "a.com(())", "example.com");
+        assertEquals(expect, MarkdownParse.getLinks(contents));
+    }
+
+    @Test(expected = AssertionError.class)
+    public void snippet3Test() throws IOException {
+        String contents = "[this title text is really long and takes up more "
+            +"than\none line\n\nand has some line breaks](\n\thttps://www."
+            +"twitter.com\n)\n\n[this title text is really long and takes up "
+            +"more than\none line](\n\thttps://ucsd-cse15l-w22.github.io/\n)"
+            +"\n\n\n[this link doesn't have a closing parenthesis](github.com"
+            +"\n\nAnd there's still some more text after that.\n\n[this link "
+            +"doesn't have a closing parenthesis for a while](https://cse.ucsd"
+            +".edu/\n\n\n\n)\n\nAnd then there's more text";
+        
+        List<String> expect = List.of("https://ucsd-cse15l-w22.github.io/");
+        assertEquals(expect, MarkdownParse.getLinks(contents));
+    }
+
+    @Test(expected = AssertionError.class)
     public void randomTest() {
         assertEquals(List.of("space-in-url.com"), new ArrayList<String>());
     }
-
 }
