@@ -24,8 +24,7 @@ class LinkCountVisitor extends AbstractVisitor {
 }
 
 public class MarkdownParse {
-    public static ArrayList<Link> getLinks(String markdown) {
-        /**
+    public static ArrayList<String> getLinks(String markdown) {
         ArrayList<String> toReturn = new ArrayList<>();
         // find the next [, then find the ], then find the (, then take up to
         // the next )
@@ -79,20 +78,22 @@ public class MarkdownParse {
         }
         // System.out.println();
         return toReturn;
-        */
 
+        /**
         Parser parser = Parser.builder().build();
         Node linkNode = parser.parse(markdown);
         LinkCountVisitor linkVisitor = new LinkCountVisitor();
         linkNode.accept(linkVisitor);
         return linkVisitor.linkArray;
+        */
     }
     
     
     public static void main(String[] args) throws IOException {
 		Path fileName = Path.of(args[0]);
 	    String contents = Files.readString(fileName);
-        ArrayList<Link> links = getLinks(contents);
+        ArrayList<String> links = getLinks(contents);
+        // ArrayList<Link> links = getLinks(contents);
         System.out.println(links);
     }
 }
